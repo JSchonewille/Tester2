@@ -169,18 +169,18 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_godlike);
         context = getApplicationContext();
-        button1 = (Button) findViewById(R.id.button);
-        button2 = (Button) findViewById(R.id.button2);
-        majorInput = (EditText) findViewById(R.id.editText);
-        minorInput = (EditText) findViewById(R.id.editText2);
-        distanceInput = (EditText) findViewById(R.id.editText3);
+        button1 = (Button) findViewById(R.id.button_Start);
+        button2 = (Button) findViewById(R.id.button_Stop);
+        majorInput = (EditText) findViewById(R.id.input_Major);
+        minorInput = (EditText) findViewById(R.id.input_Minor);
+        distanceInput = (EditText) findViewById(R.id.input_Meter);
      //   queuesize = (EditText) findViewById(R.id.editText4);
-        listView1 = (ListView) findViewById(R.id.listView);
-        logbox = (CheckBox) findViewById(R.id.checkBox);
-        algcheck = (CheckBox) findViewById(R.id.checkBox2);
-        smoothCheck = (CheckBox)findViewById(R.id.checkBox3);
+        listView1 = (ListView) findViewById(R.id.list_Data);
+        logbox = (CheckBox) findViewById(R.id.check_Log);
+        algcheck = (CheckBox) findViewById(R.id.check_Algorithm);
+        smoothCheck = (CheckBox)findViewById(R.id.check_Smoothing);
         beaconList = new ArrayList<String>();
         flatList = new ArrayList<Integer>();
         detected = new ArrayList<String>();
