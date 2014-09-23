@@ -215,6 +215,7 @@ public class MainActivity extends Activity {
                 listView1.setAdapter(arrayAdapter2);
                 log("Name","major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", "dist.(m)", "Tx");
                 scanLeDevice();
+                // this is a minor change
             }
         });
 
