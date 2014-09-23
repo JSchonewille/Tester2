@@ -198,6 +198,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 CSV = new CSVwriter();
+                log("Name","major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", "dist.(m)", "Tx");
                 if (bta == null || !bta.isEnabled()) {
                     bta.enable();
                 }
@@ -213,7 +214,7 @@ public class MainActivity extends Activity {
                 logbox.setEnabled(false);
                 distanceInput.setEnabled(false);
                 listView1.setAdapter(arrayAdapter2);
-                log("Name","major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", "dist.(m)", "Tx");
+
                 scanLeDevice();
                 // this is a minor change
             }
@@ -223,6 +224,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 StopscanLeDevice();
+                smoothener.clearqueue();
                 majorInput.setEnabled(true);
                // queuesize.setEnabled(true);
                 minorInput.setEnabled(true);

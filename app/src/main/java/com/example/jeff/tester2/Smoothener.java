@@ -1,9 +1,4 @@
 package com.example.jeff.tester2;
-import android.os.Bundle;
-import android.renderscript.Int4;
-import android.text.Editable;
-import android.widget.EditText;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -40,4 +35,7 @@ public class Smoothener {
         return avg;
     }
 
+    public void clearqueue(){
+        avgqueue.clear();
+    }
 }
