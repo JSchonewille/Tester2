@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
                         if(smoothCheck.isChecked())
                         {
                              Arssi = smoothener.smoothen(rssi);
-                             //meter = distanceCalc.distance(Arssi,tx);
+                             meter = distanceCalc.distance(Arssi,tx);
                         }
 
 

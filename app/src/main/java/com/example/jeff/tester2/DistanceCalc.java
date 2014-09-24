@@ -21,8 +21,11 @@ public class DistanceCalc {
         int inputRssi = Math.abs(avgrssi);
         int inputTx = Math.abs(tx);
 
-        double Queinput = (inputRssi - (inputTx * 0.93));
-        Queinput = Queinput * 0.4646721;
+        double Queinput = (inputRssi - (inputTx));
+        double dev = ( 50.0 / inputTx) * 3.3;
+        dev = 1 / dev;
+
+        Queinput = Queinput * dev;
 
         double avg = 0.0;
         if (avgqueue.size()<queuesize) {
