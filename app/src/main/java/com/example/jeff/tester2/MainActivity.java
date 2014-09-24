@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 
     private Smoothener smoothener;
+    private DistanceCalc distanceCalc;
     static final char[] hexArray = "0123456789ABCDEF".toCharArray();
     public Context context;
     private CheckBox logbox;
@@ -32,10 +33,7 @@ public class MainActivity extends Activity {
     private ArrayList<Integer> flatList;
     private ArrayList<String> detected;
     private EditText distanceInput;
-    private EditText queuesize;
     private int distance = 0;
-    private double baseline = 0;
-    double magicnr = 1.0;
     private EditText majorInput;
     private EditText minorInput;
     private Button button1;
@@ -55,6 +53,7 @@ public class MainActivity extends Activity {
                                      final byte[] scanRecord) {
                     int rssi = Irssi;
                     int Arssi = 0;
+                    int meter = 0;
                     int startByte = 2;
                     int major = 0;
                     int minor = 0;
@@ -91,19 +90,10 @@ public class MainActivity extends Activity {
                         minor = (scanRecord[startByte + 22] & 0xff) * 0x100 + (scanRecord[startByte + 23] & 0xff);
                         tx = (scanRecord[startByte + 24]);
 
-                        // make baseline
-                        //makeBaseline(rssi);
-
-                        // adjust Rssi
-                        /*
-                       if(smoothCheck.isChecked() && baseline != 0.0)
-                       {
-                           rssi = Flatline(rssi);
-                       }
-                       */
                         if(smoothCheck.isChecked())
                         {
                              Arssi = smoothener.smoothen(rssi);
+                             //meter = distanceCalc.distance(Arssi,tx);
                         }
 
 
@@ -114,6 +104,7 @@ public class MainActivity extends Activity {
                                 s += "Unique: " + device.toString() + " | ";
                                 s += "Rssi: " + rssi + " | ";
                                 s += "ARssi: " + Arssi + " | ";
+                                s += "Distance" + meter + " meter |";
                                 s += "Major: " + major + " | ";
                                 s += "Minor: " + minor + " | ";
                                 s += "TX: " + tx + " | ";
@@ -125,14 +116,14 @@ public class MainActivity extends Activity {
 
                             if (majorInput.getText().length() == 0) {
                                 Listcheck(s, device.toString());
-                                log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)),  Integer.toString(rssi),  Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx));
+                                log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)),  Integer.toString(rssi),  Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx),Integer.toString(meter));
 
                             }
 
                             if (majorInput.getText().length() > 0 && minorInput.getText().length() == 0) {
                                 if (Integer.parseInt(majorInput.getText().toString()) == major) {
                                     Listcheck(s, device.toString());
-                                    log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)), Integer.toString(rssi),  Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx));
+                                    log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)), Integer.toString(rssi),  Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx),Integer.toString(meter));
 
                                 }
                             }
@@ -141,7 +132,7 @@ public class MainActivity extends Activity {
 
                                 if (Integer.parseInt(majorInput.getText().toString()) == major && Integer.parseInt(minorInput.getText().toString()) == minor) {
                                     Listcheck(s, device.toString());
-                                    log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)), Integer.toString(rssi), Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx));
+                                    log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)), Integer.toString(rssi), Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx),Integer.toString(meter));
 
                                 }
 
@@ -176,7 +167,7 @@ public class MainActivity extends Activity {
         majorInput = (EditText) findViewById(R.id.input_Major);
         minorInput = (EditText) findViewById(R.id.input_Minor);
         distanceInput = (EditText) findViewById(R.id.input_Meter);
-     //   queuesize = (EditText) findViewById(R.id.editText4);
+     // queuesize = (EditText) findViewById(R.id.editText4);
         listView1 = (ListView) findViewById(R.id.list_Data);
         logbox = (CheckBox) findViewById(R.id.check_Log);
         algcheck = (CheckBox) findViewById(R.id.check_Algorithm);
@@ -185,6 +176,7 @@ public class MainActivity extends Activity {
         flatList = new ArrayList<Integer>();
         detected = new ArrayList<String>();
         smoothener = new Smoothener();
+        distanceCalc =  new DistanceCalc(15);
 
         btm = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bta = btm.getAdapter();
@@ -198,7 +190,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 CSV = new CSVwriter();
-                log("Name","major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", "dist.(m)", "Tx");
+                log("Name","major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", " input dist.(m)", "Tx","Output dist.(m)");
                 if (bta == null || !bta.isEnabled()) {
                     bta.enable();
                 }
@@ -225,6 +217,7 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 StopscanLeDevice();
                 smoothener.clearqueue();
+                distanceCalc.emptyQueue();
                 majorInput.setEnabled(true);
                // queuesize.setEnabled(true);
                 minorInput.setEnabled(true);
@@ -275,7 +268,7 @@ public class MainActivity extends Activity {
 
     }
 
-    private void log(final String input1, final String input2, final String input3, final String input4, final String input5, final String input6, final String input7, final String input8) {
+    private void log(final String input1, final String input2, final String input3, final String input4, final String input5, final String input6, final String input7, final String input8, final String input9) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -287,8 +280,9 @@ public class MainActivity extends Activity {
                     loglist.add(input4); // time
                     loglist.add(input5); // RSSI
                     loglist.add(input6);//Adjusted rssi
-                    loglist.add(input7); // distance
+                    loglist.add(input7); // distance input by user
                     loglist.add(input8); // TX power
+                    loglist.add(input9 + " meter"); // Distance output by program
 
                     try {
                         CSV.writeCsvRow(loglist);
@@ -298,116 +292,6 @@ public class MainActivity extends Activity {
                 }
             }
         }).start();
-    }
-
-    private void makeBaseline(int input) {
-        flatList.add(input);
-
-        if (flatList.size() == 3) {
-            double avg = 0;
-            double newbaseline = baseline;
-
-            for (Integer i : flatList) {
-                avg += i;
-            }
-            avg = Math.abs((avg / flatList.size()));
-            double difference =  avg - baseline;
-            // positive difference means the baseline should be adjusted upwards
-            // negative difference means the baseline shoudl be adjusted downwards
-
-            if (avg > baseline) {
-
-                // als de nieuwe  avg weinig verschilt van de baseline
-                // maken we een kleine aanpassing op de baseline
-                // numbers are determined from meetings
-                if ( (avg * 0.93)  < baseline) {
-                    newbaseline = (baseline + (difference * (magicnr * 0.5)));
-
-                }
-                // als de nieuwe avg redelijk verschilt van de nieuwe baseline
-                // maken we redelijke aanpassing op de baseline
-                else if ((avg * 0.87) <= baseline) {
-                    newbaseline = (baseline + (difference * (magicnr)));
-                }
-                // de nieuwe avg weikt enorm af van de nieuwe basline, de avg is nu de baseline
-                else {
-                    newbaseline = avg;
-                }
-            }
-
-            if (avg < baseline) {
-
-                // als de nieuwe  avg weinig verschilt van de baseline
-                // maken we een kleine aanpassing op de baseline
-                if ((avg * 1.07) > baseline) {
-                    newbaseline = (baseline + (difference * (magicnr * 0.5)));
-
-                }
-                // als de nieuwe avg redelijk verschilt van de nieuwe baseline
-                // maken we redelijke aanpassing op de baseline
-                else if ((avg * 1.13) >= baseline) {
-                    newbaseline = (baseline + (difference * (magicnr)));
-                }
-                // de nieuwe avg weikt enorm af van de nieuwe basline, de avg is nu de baseline
-                else {
-                    newbaseline = avg;
-                }
-
-            }
-            flatList.clear();
-            //System.out.println("baselined");
-            baseline = newbaseline;
-        }
-    }
-
-
-    public int Flatline(int Irssi) {
-        double output = Math.abs(Irssi);
-
-        // positive difference means the rssi is smaller than the baseline
-        // negative difference means the rssi is bigger than the baseline
-        double difference = baseline - output;
-
-        // signal needs to be adjusted upwards
-        if (difference > 0) {
-            //double test = output * 0.1;
-            // the difference is smaller than 7% of the rssi , minor adjustment
-            if (difference < ((output * 0.1) * 7)) {
-
-                output = output + (difference * (magicnr * 0.6));
-            }
-
-            // the difference is smaller than 13 % of the rssi , major adjustment
-            else if (difference <= ((output * 0.1)*13)) {
-                output = output + (difference * (magicnr));
-            }
-            // the difference is very big
-            else {
-
-            }
-
-        }
-        // signal needs to be adjusted downwards
-        if (difference < 0) {
-            // if difference is bigger than
-            // the difference is smaller than 7% of the rssi , minor adjustment
-            if (difference > ((output * 0.1) * -7)) {
-                output = output + (difference * (magicnr * 0.6));
-            }
-
-            // the difference is smaller than 13 % of the rssi , major adjustment
-            else if (difference >= ((output * 0.1) * -13)) {
-                output = output + (difference * (magicnr));
-            }
-            // the difference is very big
-            else {
-
-            }
-
-        }
-           // System.out.println("smoothed");
-
-        return(int)  (output * -1);
     }
 
 

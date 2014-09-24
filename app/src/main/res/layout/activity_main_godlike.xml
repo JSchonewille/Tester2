@@ -29,7 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="30373" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -60,6 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/check_Log"
+                    android:checked="true"
                     android:layout_centerVertical="true" />
 
                 <TextView
@@ -88,7 +90,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="61279" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -128,7 +131,7 @@
     </LinearLayout>
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:id="@+id/list_Data"/>
 
