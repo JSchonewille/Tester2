@@ -263,7 +263,7 @@ public class MainActivity extends Activity {
     private void StopscanLeDevice() {
 
         bta.stopLeScan(mLeScanCallback);
-        bta.disable();
+        //bta.disable();
 
 
     }
@@ -279,7 +279,7 @@ public class MainActivity extends Activity {
                     loglist.add(input3); // minor
                     loglist.add(input4); // time
                     loglist.add(input5); // RSSI
-                    loglist.add(input6);//Adjusted rssi
+                    loglist.add(input6);//Adjusted RSSI
                     loglist.add(input7); // distance input by user
                     loglist.add(input8); // TX power
                     //loglist.add(input9 + " meter"); // Distance output by program

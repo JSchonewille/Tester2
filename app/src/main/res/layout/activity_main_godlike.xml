@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:text="30373" />
+                android:text="" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:text="61279" />
+                android:text="" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -110,6 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/button_Stop"
                     android:ems="10"
+                    android:inputType="number"
                     android:hint="Meter" />
 
                 <CheckBox
@@ -117,6 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/input_Meter"
+                    android:checked="true"
                     android:layout_centerVertical="true" />
 
                 <TextView
