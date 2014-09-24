@@ -92,8 +92,8 @@ public class MainActivity extends Activity {
 
                         if(smoothCheck.isChecked())
                         {
-                             Arssi = smoothener.smoothen(rssi);
-                             meter = distanceCalc.distance(Arssi,tx);
+                             Arssi = smoothener.smoothen(rssi,major,minor);
+                             //meter = distanceCalc.distance(Arssi,tx);
                         }
 
 
@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
                                 s += "Unique: " + device.toString() + " | ";
                                 s += "Rssi: " + rssi + " | ";
                                 s += "ARssi: " + Arssi + " | ";
-                                s += "Distance" + meter + " meter |";
+                                //s += "Distance" + meter + " meter |";
                                 s += "Major: " + major + " | ";
                                 s += "Minor: " + minor + " | ";
                                 s += "TX: " + tx + " | ";
@@ -116,14 +116,14 @@ public class MainActivity extends Activity {
 
                             if (majorInput.getText().length() == 0) {
                                 Listcheck(s, device.toString());
-                                log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)),  Integer.toString(rssi),  Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx),Integer.toString(meter));
+                                log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)),  Integer.toString(rssi),  Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx));
 
                             }
 
                             if (majorInput.getText().length() > 0 && minorInput.getText().length() == 0) {
                                 if (Integer.parseInt(majorInput.getText().toString()) == major) {
                                     Listcheck(s, device.toString());
-                                    log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)), Integer.toString(rssi),  Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx),Integer.toString(meter));
+                                    log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)), Integer.toString(rssi),  Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx));
 
                                 }
                             }
@@ -132,7 +132,7 @@ public class MainActivity extends Activity {
 
                                 if (Integer.parseInt(majorInput.getText().toString()) == major && Integer.parseInt(minorInput.getText().toString()) == minor) {
                                     Listcheck(s, device.toString());
-                                    log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)), Integer.toString(rssi), Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx),Integer.toString(meter));
+                                    log(device.getName(), Integer.toString(major), Integer.toString(minor), Long.toString((System.currentTimeMillis() - starttime)), Integer.toString(rssi), Integer.toString(Arssi), Integer.toString(distance), Integer.toString(tx));
 
                                 }
 
@@ -175,7 +175,7 @@ public class MainActivity extends Activity {
         beaconList = new ArrayList<String>();
         flatList = new ArrayList<Integer>();
         detected = new ArrayList<String>();
-        smoothener = new Smoothener();
+        smoothener = new Smoothener(15);
         distanceCalc =  new DistanceCalc(15);
 
         btm = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
@@ -190,7 +190,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 CSV = new CSVwriter();
-                log("Name","major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", " input dist.(m)", "Tx","Output dist.(m)");
+                log("Name","major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", " input dist.(m)", "Tx");
                 if (bta == null || !bta.isEnabled()) {
                     bta.enable();
                 }
@@ -268,7 +268,7 @@ public class MainActivity extends Activity {
 
     }
 
-    private void log(final String input1, final String input2, final String input3, final String input4, final String input5, final String input6, final String input7, final String input8, final String input9) {
+    private void log(final String input1, final String input2, final String input3, final String input4, final String input5, final String input6, final String input7, final String input8) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -282,7 +282,7 @@ public class MainActivity extends Activity {
                     loglist.add(input6);//Adjusted rssi
                     loglist.add(input7); // distance input by user
                     loglist.add(input8); // TX power
-                    loglist.add(input9 + " meter"); // Distance output by program
+                    //loglist.add(input9 + " meter"); // Distance output by program
 
                     try {
                         CSV.writeCsvRow(loglist);
