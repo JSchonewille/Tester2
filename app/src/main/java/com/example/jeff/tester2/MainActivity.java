@@ -30,12 +30,12 @@ public class MainActivity extends Activity {
     private CheckBox algcheck;
     private CheckBox smoothCheck;
     private ArrayList<String> beaconList;
-    private ArrayList<Integer> flatList;
     private ArrayList<String> detected;
     private EditText distanceInput;
     private int distance = 0;
     private EditText majorInput;
     private EditText minorInput;
+    private EditText queueSizeInput;
     private Button button1;
     private Button button2;
     private ListView listView1;
@@ -167,16 +167,14 @@ public class MainActivity extends Activity {
         majorInput = (EditText) findViewById(R.id.input_Major);
         minorInput = (EditText) findViewById(R.id.input_Minor);
         distanceInput = (EditText) findViewById(R.id.input_Meter);
-     // queuesize = (EditText) findViewById(R.id.editText4);
+        queueSizeInput = (EditText) findViewById(R.id.Quesize);
         listView1 = (ListView) findViewById(R.id.list_Data);
         logbox = (CheckBox) findViewById(R.id.check_Log);
         algcheck = (CheckBox) findViewById(R.id.check_Algorithm);
         smoothCheck = (CheckBox)findViewById(R.id.check_Smoothing);
         beaconList = new ArrayList<String>();
-        flatList = new ArrayList<Integer>();
         detected = new ArrayList<String>();
-        smoothener = new Smoothener(15);
-        distanceCalc =  new DistanceCalc(15);
+        //distanceCalc =  new DistanceCalc(15);
 
         btm = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bta = btm.getAdapter();
@@ -190,6 +188,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 CSV = new CSVwriter();
+                smoothener = new Smoothener(Integer.parseInt(queueSizeInput.getText().toString()));
                 log("Name","major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", " input dist.(m)", "Tx");
                 if (bta == null || !bta.isEnabled()) {
                     bta.enable();
@@ -203,8 +202,11 @@ public class MainActivity extends Activity {
                 //queuesize.setEnabled(false);
                 majorInput.setEnabled(false);
                 minorInput.setEnabled(false);
+                queueSizeInput.setEnabled(false);
                 logbox.setEnabled(false);
                 distanceInput.setEnabled(false);
+                algcheck.setEnabled(false);
+                smoothCheck.setEnabled(false);
                 listView1.setAdapter(arrayAdapter2);
 
                 scanLeDevice();
@@ -217,12 +219,15 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 StopscanLeDevice();
                 smoothener.clearqueue();
-                distanceCalc.emptyQueue();
+                //distanceCalc.emptyQueue();
                 majorInput.setEnabled(true);
                // queuesize.setEnabled(true);
                 minorInput.setEnabled(true);
+                queueSizeInput.setEnabled(true);
                 logbox.setEnabled(true);
                 distanceInput.setEnabled(true);
+                algcheck.setEnabled(true);
+                smoothCheck.setEnabled(true);
                 logStop();
             }
         });
