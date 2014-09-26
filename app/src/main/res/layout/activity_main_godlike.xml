@@ -61,9 +61,9 @@
                     android:id="@+id/check_Algorithm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/check_Log"
                     android:checked="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_below="@+id/button_Start"
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -130,6 +130,18 @@
                     android:layout_alignBaseline="@+id/check_Smoothing"
                     android:layout_toRightOf="@+id/check_Smoothing"
                     android:text="Smoothingz" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/Quesize"
+                    android:layout_below="@+id/check_Smoothing"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/button_Stop"
+                    android:hint="Queu Size"
+                    android:text="20" />
 
             </RelativeLayout>
         </LinearLayout>

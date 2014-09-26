@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/Quesize"
         android:layout_toStartOf="@+id/editText2"
         android:layout_toEndOf="@+id/button"
         android:minWidth="1000dp"
@@ -92,7 +92,7 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/editText3"
-        android:layout_toEndOf="@+id/editText"
+        android:layout_toEndOf="@+id/Quesize"
         android:layout_toStartOf="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:hint="meter" />
