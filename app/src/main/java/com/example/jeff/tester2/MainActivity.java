@@ -1,15 +1,10 @@
 package com.example.jeff.tester2;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
-import android.content.Intent;
-import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,7 +46,7 @@ public class MainActivity extends Activity {
     private boolean message1 = false;
     private boolean message2 = false;
     private boolean message0 = false;
-    NotificationManager nMN;
+    NotificationHandler notificationHandler;
 
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback =
@@ -125,16 +120,16 @@ public class MainActivity extends Activity {
 
                             if (major == 41494 && minor == 50573 && Arssi > -74 && !message1) {
                                 message1=true;
-                                showNotification1("Welkom", "Welkom bij move4mobile", context, 0);
+                                notificationHandler.showNotification("Welkom", "Welkom bij move4mobile", context, 0);
                             }
                             if (major == 41494 && minor == 50573 && Arssi > -89 && !message0) {
                                 message0=true;
-                                showNotification1("Move4Mobile Gramsbergen", "Move4Mobile zit op de eerste verdieping.", context, 0);
+                                notificationHandler.showNotification("Move4Mobile Gramsbergen", "Move4Mobile zit op de eerste verdieping.", context, 0);
                             }
 
                             if (major == 52607 && minor == 63819 && rssi > -68 && !message2) {
                                 message2=true;
-                                showNotification1("Kantine", "Dit is de kantine van Move4Mobile.", context, 0);
+                                notificationHandler.showNotification("Kantine", "Dit is de kantine van Move4Mobile.", context, 0);
                             }
 
                             if (majorInput.getText().length() == 0) {
@@ -200,7 +195,7 @@ public class MainActivity extends Activity {
         detected = new ArrayList<String>();
         smoothener = new Smoothener(15);
         distanceCalc =  new DistanceCalc(15);
-        nMN = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationHandler = new NotificationHandler(this);
 
         btm = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bta = btm.getAdapter();
@@ -348,30 +343,6 @@ public class MainActivity extends Activity {
         });
 
     }
-
-    private void showNotification1(String Title, String eventtext, Context ctx, int mssgID) {
-
-        // Set the icon, scrolling text and timestamp
-        Notification notification = new Notification(R.drawable.move4mobile,
-                eventtext, System.currentTimeMillis());
-        // The PendingIntent to launch our activity if the user selects this
-        // notification
-        PendingIntent contentIntent = PendingIntent.getActivity(ctx, mssgID,
-                new Intent(ctx, MainActivity.class), mssgID);
-
-        notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-       // notification.bigContentView = new RemoteViews(context.getPackageName(),R.layout.activity_main_godlike );
-
-        // Set the info for the views that show in the notification panel.
-        notification.setLatestEventInfo(ctx, Title, eventtext,
-                contentIntent);
-        // Send the notification.
-        nMN.notify("Title", mssgID, notification);
-
-    }
-
-
-
 
 
 
