@@ -42,11 +42,12 @@ public class MainActivity extends Activity {
     private BluetoothAdapter bta;
     private ArrayAdapter arrayAdapter2;
     private CSVwriter CSV;
+    LogicaHandler LHandler;
     private long starttime;
     private boolean message1 = false;
     private boolean message2 = false;
     private boolean message0 = false;
-    NotificationHandler notificationHandler;
+
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback =
             new BluetoothAdapter.LeScanCallback() {
@@ -96,6 +97,7 @@ public class MainActivity extends Activity {
                         if(smoothCheck.isChecked())
                         {
                              Arssi = smoothener.smoothen(rssi,major,minor);
+                             LHandler.handle(major,minor,Arssi);
                              //meter = distanceCalc.distance(Arssi,tx);
                         }
 
@@ -117,19 +119,7 @@ public class MainActivity extends Activity {
                                 s += "error";
                             }
 
-                            if (major == 41494 && minor == 50573 && Arssi > -74 && !message1) {
-                                message1=true;
-                                notificationHandler.showNotification("Welkom", "Welkom bij move4mobile", context, 0);
-                            }
-                            if (major == 41494 && minor == 50573 && Arssi > -89 && !message0) {
-                                message0=true;
-                                notificationHandler.showNotification("Move4Mobile Gramsbergen", "Move4Mobile zit op de eerste verdieping.", context, 0);
-                            }
 
-                            if (major == 52607 && minor == 63819 && rssi > -68 && !message2) {
-                                message2=true;
-                                notificationHandler.showNotification("Kantine", "Dit is de kantine van Move4Mobile.", context, 0);
-                            }
 
                             if (majorInput.getText().length() == 0) {
                                 Listcheck(s, device.toString());
@@ -192,7 +182,7 @@ public class MainActivity extends Activity {
         beaconList = new ArrayList<String>();
         detected = new ArrayList<String>();
         smoothener = new Smoothener(15);
-        notificationHandler = new NotificationHandler(this);
+        LHandler = new LogicaHandler(context);
         //distanceCalc =  new DistanceCalc(15);
 
         btm = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);

@@ -141,7 +141,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_toStartOf="@+id/button_Stop"
                     android:hint="Queu Size"
-                    android:text="20" />
+                    android:text="8" />
 
             </RelativeLayout>
         </LinearLayout>
