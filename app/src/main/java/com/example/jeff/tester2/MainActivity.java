@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity {
     private EditText queueSizeInput;
     private Button button1;
     private Button button2;
+    private Button testButton;
     private ListView listView1;
     private BluetoothManager btm;
     private BluetoothAdapter bta;
@@ -171,6 +173,7 @@ public class MainActivity extends Activity {
         context = getApplicationContext();
         button1 = (Button) findViewById(R.id.button_Start);
         button2 = (Button) findViewById(R.id.button_Stop);
+        testButton = (Button) findViewById(R.id.Testbutton);
         majorInput = (EditText) findViewById(R.id.input_Major);
         minorInput = (EditText) findViewById(R.id.input_Minor);
         distanceInput = (EditText) findViewById(R.id.input_Meter);
@@ -178,7 +181,7 @@ public class MainActivity extends Activity {
         listView1 = (ListView) findViewById(R.id.list_Data);
         logbox = (CheckBox) findViewById(R.id.check_Log);
         algcheck = (CheckBox) findViewById(R.id.check_Algorithm);
-        smoothCheck = (CheckBox)findViewById(R.id.check_Smoothing);
+        smoothCheck = (CheckBox) findViewById(R.id.check_Smoothing);
         beaconList = new ArrayList<String>();
         detected = new ArrayList<String>();
         smoothener = new Smoothener(15);
@@ -198,7 +201,7 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 CSV = new CSVwriter();
                 smoothener = new Smoothener(Integer.parseInt(queueSizeInput.getText().toString()));
-                log("Name","major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", " input dist.(m)", "Tx");
+                log("Name", "major", "minor", "Tijd(ms)", "RSSI", "Adj. RSSI", " input dist.(m)", "Tx");
                 if (bta == null || !bta.isEnabled()) {
                     bta.enable();
                 }
@@ -227,7 +230,7 @@ public class MainActivity extends Activity {
                 smoothener.clearqueue();
                 //distanceCalc.emptyQueue();
                 majorInput.setEnabled(true);
-               // queuesize.setEnabled(true);
+                // queuesize.setEnabled(true);
                 minorInput.setEnabled(true);
                 queueSizeInput.setEnabled(true);
                 logbox.setEnabled(true);
@@ -238,6 +241,17 @@ public class MainActivity extends Activity {
             }
         });
 
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),Offer.class);
+                i.putExtra("input1","www.google.nl");
+                i.putExtra("input2","u krijgt geen korting");
+                startActivity(i);
+                //setResult(RESULT_OK,i);
+                //finish();
+            }
+        });
 
     }
 

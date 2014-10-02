@@ -129,7 +129,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/check_Smoothing"
                     android:layout_toRightOf="@+id/check_Smoothing"
-                    android:text="Smoothingz" />
+                    android:text="Smoothingz"
+                    android:id="@+id/textView" />
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -142,6 +143,17 @@
                     android:layout_toStartOf="@+id/button_Stop"
                     android:hint="Queu Size"
                     android:text="8" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="t"
+                    android:id="@+id/Testbutton"
+                    android:layout_toEndOf="@+id/Quesize"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignBottom="@+id/Quesize"
+                    android:layout_alignTop="@+id/Quesize" />
 
             </RelativeLayout>
         </LinearLayout>

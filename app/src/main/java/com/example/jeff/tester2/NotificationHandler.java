@@ -18,6 +18,7 @@ public class NotificationHandler {
 
     public NotificationHandler(Context mContext) {
         nMN = (NotificationManager)mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
     }
 
 
@@ -38,6 +39,32 @@ public class NotificationHandler {
         notification.setLatestEventInfo(ctx, Title, eventtext,
                 contentIntent);
         // Send the notification.
+
+        nMN.notify("Title", mssgID, notification);
+
+    }
+
+    public void CouponNotification2(String Title, String eventtext, Context ctx, int mssgID,String link ,String text) {
+
+        // Set the icon, scrolling text and timestamp
+        Notification notification = new Notification(R.drawable.move4mobile,
+                eventtext, System.currentTimeMillis());
+        // The PendingIntent to launch our activity if the user selects this
+        // notification
+        Intent it = new Intent(ctx,Offer.class);
+        it.putExtra("input1",link);
+        it.putExtra("input2",text);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(ctx, mssgID,it, mssgID);
+
+        notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        // notification.bigContentView = new RemoteViews(context.getPackageName(),R.layout.activity_main_godlike );
+
+        // Set the info for the views that show in the notification panel.
+        notification.setLatestEventInfo(ctx, Title, eventtext,
+                contentIntent);
+        // Send the notification.
+
         nMN.notify("Title", mssgID, notification);
 
     }
