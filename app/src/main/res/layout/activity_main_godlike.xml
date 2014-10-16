@@ -144,16 +144,6 @@
                     android:hint="Queu Size"
                     android:text="8" />
 
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="t"
-                    android:id="@+id/Testbutton"
-                    android:layout_toEndOf="@+id/Quesize"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignBottom="@+id/Quesize"
-                    android:layout_alignTop="@+id/Quesize" />
 
             </RelativeLayout>
         </LinearLayout>

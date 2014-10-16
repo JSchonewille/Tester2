@@ -20,11 +20,11 @@ public class LogicaHandler {
     private boolean message2 = false;
 
 
-    NotificationHandler notificationHandler;
+    NotificationMaker notificationHandler;
 
     public LogicaHandler(Context c) {
         mainContext = c;
-        notificationHandler = new NotificationHandler(mainContext);
+        notificationHandler = new NotificationMaker(mainContext);
     }
 
 

@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class MainActivity extends Activity {
+public class TestLogActivity extends Activity {
 
     private Smoothener smoothener;
     private DistanceCalc distanceCalc;
@@ -153,7 +152,7 @@ public class MainActivity extends Activity {
             };
 
 
-    public MainActivity() {
+    public TestLogActivity() {
     }
 
     private static String bytesToHex(byte[] bytes) {
@@ -241,17 +240,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),Offer.class);
-                i.putExtra("input1","www.google.nl");
-                i.putExtra("input2","u krijgt geen korting");
-                startActivity(i);
-                //setResult(RESULT_OK,i);
-                //finish();
-            }
-        });
+
 
     }
 
