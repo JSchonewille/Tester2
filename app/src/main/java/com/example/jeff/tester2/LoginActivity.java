@@ -25,6 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import library.DatabaseHandler;
+import library.PrefUtils;
 import library.UserFunctions;
 
 public class LoginActivity extends Activity {
@@ -42,6 +43,9 @@ public class LoginActivity extends Activity {
     private static String KEY_LASTNAME = "lname";
     private static String KEY_EMAIL = "email";
     private static String KEY_CREATED_AT = "created_at";
+    public static final String PREFS_LOGIN_USERNAME_KEY = "__USERNAME__" ;
+    public static final String PREFS_LOGIN_PASSWORD_KEY = "__PASSWORD__" ;
+
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
 
@@ -58,6 +62,18 @@ public class LoginActivity extends Activity {
         autoLogin = (CheckBox) findViewById(R.id.autoLogin);
 
         TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
+
+
+        String loggedInUserName = PrefUtils.getFromPrefs(LoginActivity.this, PREFS_LOGIN_USERNAME_KEY, "");
+        String loggedInUserPassword = PrefUtils.getFromPrefs(LoginActivity.this, PREFS_LOGIN_PASSWORD_KEY, "");
+
+        if (loggedInUserName != "" && loggedInUserPassword !=""){
+            inputEmail.setText(loggedInUserName);
+            inputPassword.setText(loggedInUserPassword);
+            autoLogin.setChecked(true);
+            NetAsync(findViewById(R.id.btnLogin));
+        }
+
 
         // Listening to register new account link
         registerScreen.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +102,10 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 if (  ( !inputEmail.getText().toString().equals("")) && ( !inputPassword.getText().toString().equals("")) )
                 {
-
+                    if (autoLogin.isChecked()){
+                        PrefUtils.saveToPrefs(LoginActivity.this, PREFS_LOGIN_USERNAME_KEY, inputEmail.getText().toString());
+                        PrefUtils.saveToPrefs(LoginActivity.this, PREFS_LOGIN_PASSWORD_KEY, inputPassword.getText().toString());
+                    }
                     NetAsync(view);
                 }
                 else if ( ( !inputEmail.getText().toString().equals("")) )
@@ -123,7 +142,7 @@ public class LoginActivity extends Activity {
             super.onPreExecute();
 
             nDialog = new ProgressDialog(LoginActivity.this);
-            nDialog.setTitle("Checking Network");
+            nDialog.setTitle("Connecting");
             nDialog.setMessage("Loading..");
             nDialog.setIndeterminate(false);
             nDialog.setCancelable(true);
@@ -139,7 +158,7 @@ public class LoginActivity extends Activity {
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
             if (netInfo != null && netInfo.isConnected()) {
                 try {
-                    URL url = new URL("http://www.google.com");
+                    URL url = new URL("http://www.000webhost.com/");
                     HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
                     urlc.setConnectTimeout(3000);
                     urlc.connect();
@@ -168,7 +187,7 @@ public class LoginActivity extends Activity {
                 new ProcessLogin().execute();
             } else {
                 nDialog.dismiss();
-                Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Could not connect to server. Check your internet connection", Toast.LENGTH_SHORT).show();
             }
         }
 
