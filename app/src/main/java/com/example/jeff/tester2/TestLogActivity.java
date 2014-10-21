@@ -18,6 +18,11 @@ import android.widget.ListView;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import library.CSVwriter;
+import library.DistanceCalc;
+import library.LogicaHandler;
+import library.Smoothener;
+
 
 public class TestLogActivity extends Activity {
 
@@ -338,6 +343,15 @@ public class TestLogActivity extends Activity {
         });
 
     }
+
+
+    @Override
+    public void onBackPressed(){
+        StopscanLeDevice();
+        super.onBackPressed();
+        finish();
+    }
+
 
 
 }

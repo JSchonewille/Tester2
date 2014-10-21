@@ -30,6 +30,7 @@ import library.UserFunctions;
 public class LoginActivity extends Activity {
 
     Button btnLogin;
+    Button AdminButton;
     EditText inputEmail;
     EditText inputPassword;
     CheckBox autoLogin;
@@ -51,6 +52,7 @@ public class LoginActivity extends Activity {
         // setting default screen to login.xml
         setContentView(R.layout.login);
         btnLogin = (Button) findViewById(R.id.btnLogin);
+        AdminButton = (Button) findViewById(R.id.AdminButton);
         inputEmail = (EditText) findViewById(R.id.inputEmail);
         inputPassword = (EditText) findViewById(R.id.inputPassword);
         autoLogin = (CheckBox) findViewById(R.id.autoLogin);
@@ -63,6 +65,15 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        AdminButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to menu screen
+                Intent i = new Intent(getApplicationContext(), MenuActivity.class);
                 startActivity(i);
                 finish();
             }

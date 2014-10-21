@@ -1,4 +1,4 @@
-package com.example.jeff.tester2;
+package library;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.jeff.tester2.R;
 import com.google.zxing.WriterException;
 
 

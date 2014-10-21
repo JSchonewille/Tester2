@@ -1,4 +1,4 @@
-package com.example.jeff.tester2;
+package library;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -9,6 +9,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
+
+import com.example.jeff.tester2.R;
+import com.example.jeff.tester2.TestLogActivity;
 
 /**
  * Created by Sander on 26-9-2014.

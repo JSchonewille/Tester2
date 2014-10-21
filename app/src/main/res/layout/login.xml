@@ -75,7 +75,8 @@
                 android:layout_height="wrap_content"
                 android:text="Login automatically"
                 android:id="@+id/autoLogin"
-                android:checked="false" />
+                android:checked="false"
+                android:layout_gravity="left"/>
 
             <TextView android:id="@+id/link_to_register"
                 android:layout_width="fill_parent"
@@ -86,6 +87,15 @@
                 android:gravity="center"
                 android:textSize="20dip"
                 android:textColor="#0b84aa"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Admin"
+                android:id="@+id/AdminButton"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/button_lightblue"/>
 
         </LinearLayout>
         <!-- Login Form Ends -->

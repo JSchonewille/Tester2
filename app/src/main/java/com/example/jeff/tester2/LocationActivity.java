@@ -25,6 +25,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import library.CSVwriter;
+import library.DistanceCalc;
+import library.NotificationMaker;
+import library.Smoothener;
+
 
 public class LocationActivity extends Activity {
 
@@ -236,7 +241,7 @@ public class LocationActivity extends Activity {
         scanLeDevice();
         // this is a minor change
 
-        getEmail();
+        //getEmail();
      //   ConnectToDatabase();
         }
 
@@ -357,6 +362,13 @@ public class LocationActivity extends Activity {
 
             }
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        StopscanLeDevice();
+        super.onBackPressed();
+        finish();
     }
 
 

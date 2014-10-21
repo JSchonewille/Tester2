@@ -1,4 +1,4 @@
-package com.example.jeff.tester2;
+package library;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

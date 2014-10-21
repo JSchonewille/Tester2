@@ -42,6 +42,16 @@ public class MenuActivity extends Activity {
             }
         });
 
+        btnButton2.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to mainactivity screen
+                Intent i = new Intent(getApplicationContext(), RollercoasterActivity.class);
+                startActivity(i);
+            }
+        });
+
+
         btnButton4.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {

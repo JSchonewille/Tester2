@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_margin="4dp"
-            android:text=""
+            android:text="Rollercoaster demo"
 
             android:background="@drawable/button_lightblue"
             />
