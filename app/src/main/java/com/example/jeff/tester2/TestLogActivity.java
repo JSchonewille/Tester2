@@ -48,7 +48,6 @@ public class TestLogActivity extends Activity {
     private BluetoothAdapter bta;
     private ArrayAdapter arrayAdapter2;
     private CSVwriter CSV;
-    LogicaHandler LHandler;
     private long starttime;
     private boolean message1 = false;
     private boolean message2 = false;
@@ -103,7 +102,6 @@ public class TestLogActivity extends Activity {
                         if(smoothCheck.isChecked())
                         {
                              Arssi = smoothener.smoothen(rssi,major,minor);
-                             LHandler.handle(major,minor,Arssi);
                              //meter = distanceCalc.distance(Arssi,tx);
                         }
 
@@ -189,7 +187,6 @@ public class TestLogActivity extends Activity {
         beaconList = new ArrayList<String>();
         detected = new ArrayList<String>();
         smoothener = new Smoothener(15);
-        LHandler = new LogicaHandler(context);
         //distanceCalc =  new DistanceCalc(15);
 
         btm = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);

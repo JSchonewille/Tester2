@@ -51,6 +51,14 @@ public class MenuActivity extends Activity {
             }
         });
 
+        btnButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),WinkelActivity.class);
+                startActivity(i);
+            }
+        });
+
 
         btnButton4.setOnClickListener(new View.OnClickListener() {
 

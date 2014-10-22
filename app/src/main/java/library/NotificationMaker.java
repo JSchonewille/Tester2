@@ -85,7 +85,7 @@ public class NotificationMaker {
         notiStyle.setBigContentTitle(Title);
         notiStyle.setSummaryText(eventtext);
 
-            remote_picture = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.eersteverdieping);
+            //remote_picture = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.eersteverdieping);
 
 
         notiStyle.bigPicture(remote_picture);

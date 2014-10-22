@@ -9,46 +9,56 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/move4mobile"
         android:label="iBeacon"
         android:theme="@style/AppTheme" >
+        <receiver android:name=".BroadcastReciever" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=".Jeff_process" >
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+        </service>
 
-
-        <activity android:name=".LoginActivity"
-            android:label="M4M iBeacon">
+        <activity
+            android:name=".LoginActivity"
+            android:label="M4M iBeacon" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!--  Entry for RegisterActivity.class -->
-        <activity android:name=".RegisterActivity"
-            android:label="Register New Account">
-
+        <!-- Entry for RegisterActivity.class -->
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Register New Account" >
         </activity>
-
         <activity
             android:name=".LocationActivity"
             android:label="@string/app_name" >
         </activity>
-
         <activity
             android:name=".MenuActivity"
             android:label="Menu" >
         </activity>
-
         <activity
             android:name=".RollercoasterActivity"
             android:label="Rollercoaster" >
         </activity>
-
         <activity
             android:name=".TestLogActivity"
             android:label="Menu"
@@ -58,8 +68,10 @@
             android:name="library.Offer"
             android:label="@string/title_activity_offer" >
         </activity>
-
-
+        <activity
+            android:name=".WinkelActivity"
+            android:label="@string/title_activity_winkel" >
+        </activity>
     </application>
 
 </manifest>

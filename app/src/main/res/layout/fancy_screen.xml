@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_margin="4dp"
-            android:text=""
+            android:text="Winkel demo"
 
             android:background="@drawable/button_lightblue"
             />
