@@ -6,16 +6,10 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import library.CSVwriter;
-import library.DistanceCalc;
 import library.NotificationMaker;
 import library.Smoothener;
 
@@ -24,30 +18,18 @@ import library.Smoothener;
  */
 public class RollercoasterActivity extends Activity {
     private Smoothener smoothener;
-    private DistanceCalc distanceCalc;
     static final char[] hexArray = "0123456789ABCDEF".toCharArray();
     public Context context;
 
     private ArrayList<String> beaconList;
     private ArrayList<String> detected;
 
-
-
-    private Handler handler;
-    private EditText queueSizeInput;
     private ImageView rollercoasterTrain;
 
-    private ListView listView1;
     private BluetoothManager btm;
     private BluetoothAdapter bta;
-    private ArrayAdapter arrayAdapter2;
-    private CSVwriter CSV;
-    private long starttime;
 
     NotificationMaker notificationMaker;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,49 +38,29 @@ public class RollercoasterActivity extends Activity {
         // Set full screen view
         setContentView(R.layout.rollercoaster_test);
 
-        queueSizeInput = (EditText) findViewById(R.id.Quesize);
-        listView1 = (ListView) findViewById(R.id.list_Data);
         rollercoasterTrain = (ImageView) findViewById(R.id.rollercoasterTrain);
 
         beaconList = new ArrayList<String>();
         detected = new ArrayList<String>();
-        smoothener = new Smoothener(15);
+        smoothener = new Smoothener(Integer.parseInt("15"));
         notificationMaker = new NotificationMaker(this);
         //distanceCalc =  new DistanceCalc(15);
 
         btm = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bta = btm.getAdapter();
 
-        arrayAdapter2 = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                beaconList);
 
         if (bta == null || !bta.isEnabled()) {
             // Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             bta.enable();
         }
-
-        CSV = new CSVwriter();
-        smoothener = new Smoothener(Integer.parseInt("15"));
-
-        if (bta == null || !bta.isEnabled()) {
-            bta.enable();
-        }
-
-        starttime = System.currentTimeMillis();
         beaconList.clear();
         detected.clear();
-        //queuesize.setEnabled(false);
-
-        handler = new Handler();
 
         scanLeDevice();
 
 
     }
-
-
 
     private void scanLeDevice() {
         new Thread(new Runnable() {
@@ -166,21 +128,6 @@ public class RollercoasterActivity extends Activity {
 
 
                         if (patternFound) {
-                            String s = "";
-                            try {
-                                s += "Name:" + device.getName() + " | ";
-                                s += "Unique: " + device.toString() + " | ";
-                                s += "Rssi: " + rssi + " | ";
-                                s += "ARssi: " + Arssi + " | ";
-                                //s += "Distance" + meter + " meter |";
-                                s += "Major: " + major + " | ";
-                                s += "Minor: " + minor + " | ";
-                                s += "TX: " + tx + " | ";
-
-
-                            } catch (Exception e) {
-                                s += "error";
-                            }
 
 
                             if (major == 31690){
