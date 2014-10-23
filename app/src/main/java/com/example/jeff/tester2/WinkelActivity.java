@@ -44,8 +44,8 @@ public class WinkelActivity extends Activity {
 
         b1 = new ibeacon(52607, 63819);
         b2 = new ibeacon(41494, 50573);
-        b3 = new ibeacon(30373, 61279);
-        b4 = new ibeacon(300, 20);
+        b3 = new ibeacon(31655,10);
+        b4 = new ibeacon(31690, 2);
 
         t1 = (TextView) findViewById(R.id.t1);
         t2 = (TextView) findViewById(R.id.t2);

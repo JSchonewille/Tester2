@@ -154,7 +154,7 @@ public class MyService extends Service {
 
     public void startMain() {
 
-        Intent start = new Intent(this, MenuActivity.class);
+        Intent start = new Intent(this, LoginActivity.class);
         start.setAction(Intent.ACTION_MAIN);
         start.addCategory(Intent.CATEGORY_LAUNCHER);
         start.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
